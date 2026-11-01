@@ -1,25 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GitHub Quick-Start Guide for IT Assistants</title>
+  <title>The Complete GitHub Field Guide — Interactive Portal for IT Assistants</title>
   <style>
     :root {
       --bg: #f6f8fa;
       --surface: #ffffff;
+      --surface-alt: #f0f3f6;
       --text: #1f2328;
       --muted: #59636e;
       --border: #d1d9e0;
       --primary: #0969da;
+      --primary-hover: #0550ae;
       --primary-light: #ddf4ff;
       --success: #1a7f37;
       --success-light: #dafbe1;
       --warning: #9a6700;
       --warning-light: #fff8c5;
+      --danger: #cf222e;
+      --danger-light: #ffebe9;
       --purple: #8250df;
       --purple-light: #fbefff;
+      --code-bg: #0d1117;
+      --code-text: #e6edf3;
       --radius: 12px;
+      --shadow: 0 1px 3px rgba(31, 35, 40, 0.06), 0 4px 12px rgba(31, 35, 40, 0.04);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-alt: #21262d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --border: #30363d;
+      --primary: #58a6ff;
+      --primary-hover: #79c0ff;
+      --primary-light: rgba(56, 139, 253, 0.15);
+      --success: #3fb950;
+      --success-light: rgba(46, 160, 67, 0.15);
+      --warning: #d29922;
+      --warning-light: rgba(187, 128, 9, 0.15);
+      --danger: #f85149;
+      --danger-light: rgba(248, 81, 73, 0.15);
+      --purple: #bc8cff;
+      --purple-light: rgba(163, 113, 247, 0.15);
+      --code-bg: #010409;
+      --code-text: #e6edf3;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
     * {
@@ -28,152 +58,357 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.65;
       display: flex;
       min-height: 100vh;
+      transition: background-color 0.2s, color 0.2s;
     }
 
-    /* Sidebar Navigation */
+    /* Sidebar */
     aside {
-      width: 280px;
+      width: 300px;
       background: var(--surface);
       border-right: 1px solid var(--border);
-      padding: 28px 20px;
+      padding: 24px 18px;
       position: fixed;
       height: 100vh;
       overflow-y: auto;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 1.15rem;
-      margin-bottom: 8px;
       color: var(--text);
+      text-decoration: none;
+    }
+
+    .theme-btn {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--primary);
     }
 
     .brand-sub {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--muted);
-      margin-bottom: 24px;
-      padding-bottom: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--border);
+    }
+
+    .progress-box {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .progress-bar-bg {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--purple));
+      transition: width 0.3s ease;
     }
 
     nav ul {
       list-style: none;
+      flex: 1;
     }
 
     nav li {
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     nav a {
       display: block;
-      padding: 10px 12px;
+      padding: 9px 12px;
       border-radius: 8px;
       color: var(--text);
       text-decoration: none;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 500;
       transition: background 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
     }
 
-    nav a:hover {
-      background: var(--bg);
+    nav a:hover, nav a.active {
+      background: var(--primary-light);
       color: var(--primary);
+      border-left-color: var(--primary);
     }
 
     nav .chap-num {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       color: var(--muted);
-      display: block;
-      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .interactive-pill {
+      background: var(--purple-light);
+      color: var(--purple);
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-weight: 700;
     }
 
     /* Main Content */
     main {
-      margin-left: 280px;
+      margin-left: 300px;
       flex: 1;
-      max-width: 880px;
-      padding: 40px 48px 80px;
+      max-width: 960px;
+      padding: 40px 48px 100px;
     }
 
     header.hero {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 32px;
+      padding: 36px;
       margin-bottom: 36px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
     }
 
     .badge {
       display: inline-block;
       background: var(--primary-light);
       color: var(--primary);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 4px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 12px;
       border-radius: 20px;
-      margin-bottom: 12px;
+    }
+
+    .badge.purple {
+      background: var(--purple-light);
+      color: var(--purple);
+    }
+
+    .badge.green {
+      background: var(--success-light);
+      color: var(--success);
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
+      font-size: 2.15rem;
+      line-height: 1.25;
+      margin-bottom: 12px;
     }
 
     .hero p {
       color: var(--muted);
       font-size: 1.05rem;
+      max-width: 720px;
     }
 
+    .quick-jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .btn.primary:hover {
+      background: var(--primary-hover);
+      color: #ffffff;
+    }
+
+    .btn.success {
+      background: var(--success);
+      color: #ffffff;
+      border-color: var(--success);
+    }
+
+    .btn.danger {
+      background: var(--danger-light);
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+
+    /* Chapters */
     section.chapter {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 32px;
-      margin-bottom: 32px;
+      padding: 36px;
+      margin-bottom: 36px;
       scroll-margin-top: 24px;
+      box-shadow: var(--shadow);
     }
 
-    .chapter-label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--primary);
+    .chapter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 6px;
     }
 
+    .chapter-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--primary);
+    }
+
+    .mark-read-btn {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .mark-read-btn.completed {
+      background: var(--success-light);
+      color: var(--success);
+      border-color: var(--success);
+    }
+
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.55rem;
       margin-bottom: 16px;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
     }
 
     h3 {
-      font-size: 1.1rem;
-      margin: 20px 0 8px;
+      font-size: 1.15rem;
+      margin: 24px 0 10px;
     }
 
     p {
       margin-bottom: 14px;
     }
 
+    code {
+      background: var(--surface-alt);
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      border: 1px solid var(--border);
+    }
+
+    /* Compare Grid (Git vs GitHub) */
+    .compare-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 18px 0 24px;
+    }
+
+    .compare-box {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      background: var(--surface-alt);
+    }
+
+    .compare-box h4 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     /* Dictionary Grid */
     .vocab-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 16px;
       margin-top: 16px;
     }
@@ -181,8 +416,14 @@
     .vocab-card {
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 16px;
-      background: var(--bg);
+      padding: 18px;
+      background: var(--surface-alt);
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .vocab-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
     }
 
     .vocab-card strong {
@@ -194,89 +435,28 @@
 
     .vocab-card span.analogy {
       display: inline-block;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       background: var(--surface);
       border: 1px solid var(--border);
       padding: 2px 8px;
       border-radius: 6px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       color: var(--muted);
+      font-weight: 600;
     }
 
-    /* Visual Branch Diagram */
-    .diagram-box {
-      background: #0d1117;
-      color: #e6edf3;
-      border-radius: 10px;
-      padding: 24px;
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 0.9rem;
-      overflow-x: auto;
-      margin: 20px 0;
-      line-height: 1.7;
-    }
-
-    .diagram-box .main-line { color: #58a6ff; }
-    .diagram-box .branch-line { color: #3fb950; }
-    .diagram-box .note { color: #8b949e; }
-
-    /* Step List */
-    .step-list {
-      list-style: none;
-      margin-top: 20px;
-    }
-
-    .step-item {
-      display: flex;
-      gap: 16px;
-      padding: 18px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      margin-bottom: 14px;
-      background: var(--surface);
-    }
-
-    .step-number {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .step-content h4 {
-      font-size: 1.05rem;
-      margin-bottom: 4px;
-    }
-
-    .step-content p {
-      margin-bottom: 6px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .ui-hint {
-      display: inline-block;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.84rem;
-      font-family: ui-monospace, SFMono-Regular, monospace;
-      color: var(--text);
+    .vocab-card p {
+      font-size: 0.92rem;
+      margin-bottom: 0;
     }
 
     /* Callouts */
     .callout {
       padding: 16px 20px;
       border-radius: 10px;
-      margin: 18px 0;
+      margin: 20px 0;
       border-left: 4px solid;
+      font-size: 0.95rem;
     }
 
     .callout.rule {
@@ -289,18 +469,319 @@
       border-color: var(--success);
     }
 
-    .callout.pr {
-      background: var(--purple-light);
-      border-color: var(--purple);
+    .callout.danger {
+      background: var(--danger-light);
+      border-color: var(--danger);
     }
 
-    /* FAQ Accordion */
+    .callout.info {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+    /* Interactive Lesson Box */
+    .interactive-lab {
+      border: 2px solid var(--purple);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+      background: var(--surface);
+    }
+
+    .lab-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .lab-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--purple);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sim-canvas {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 10px;
+      padding: 22px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9rem;
+      min-height: 155px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      line-height: 1.7;
+      white-space: pre;
+    }
+
+    .sim-status {
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      font-size: 0.92rem;
+      margin-bottom: 16px;
+    }
+
+    .sim-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Interactive Checklist */
+    .step-list {
+      list-style: none;
+      margin-top: 18px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 16px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      background: var(--surface-alt);
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+
+    .step-item.checked {
+      border-color: var(--success);
+      background: var(--success-light);
+    }
+
+    .step-check {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+      margin-top: 2px;
+      background: var(--surface);
+    }
+
+    .step-item.checked .step-check {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .step-content h4 {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .step-content p {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .ui-hint {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      color: var(--text);
+    }
+
+    /* Table */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--surface-alt);
+      font-weight: 700;
+    }
+
+    /* Scenario Buttons */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .scenario-btn {
+      text-align: left;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.93rem;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+
+    .scenario-btn:hover, .scenario-btn.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* Diff Viewer */
+    .diff-box {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 10px;
+      padding: 18px;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 0.86rem;
+      overflow-x: auto;
+      margin: 14px 0;
+      line-height: 1.65;
+    }
+
+    .diff-del {
+      background: rgba(248, 81, 73, 0.25);
+      color: #ffa198;
+      display: block;
+      padding: 2px 8px;
+      border-left: 3px solid #f85149;
+    }
+
+    .diff-add {
+      background: rgba(46, 160, 67, 0.25);
+      color: #7ee787;
+      display: block;
+      padding: 2px 8px;
+      border-left: 3px solid #3fb950;
+    }
+
+    .diff-ctx {
+      color: #8b949e;
+      display: block;
+      padding: 2px 8px;
+    }
+
+    /* Version Pills */
+    .semver-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+
+    .semver-card {
+      flex: 1;
+      min-width: 180px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      background: var(--surface-alt);
+      text-align: center;
+    }
+
+    .semver-num {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: ui-monospace, monospace;
+    }
+
+    /* Quiz */
+    .quiz-q {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 16px;
+      background: var(--surface-alt);
+    }
+
+    .quiz-q h4 {
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .quiz-opts {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .quiz-opt {
+      text-align: left;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .quiz-opt:hover {
+      border-color: var(--primary);
+    }
+
+    .quiz-opt.correct {
+      background: var(--success-light);
+      border-color: var(--success);
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .quiz-opt.wrong {
+      background: var(--danger-light);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .quiz-feedback {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    /* Search FAQ */
+    .faq-search {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
     details {
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px 18px;
-      margin-bottom: 12px;
-      background: var(--bg);
+      margin-bottom: 10px;
+      background: var(--surface-alt);
     }
 
     summary {
@@ -313,10 +794,10 @@
       margin-top: 10px;
       margin-bottom: 0;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 860px) {
       body { flex-direction: column; }
       aside {
         position: static;
@@ -329,260 +810,774 @@
         margin-left: 0;
         padding: 24px 16px;
       }
+      .compare-two {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- SIDEBAR -->
   <aside>
-    <div class="brand">📘 GitHub Handbook</div>
-    <div class="brand-sub">For IT Assistants &amp; Beginners</div>
+    <div class="brand-row">
+      <a href="#" class="brand">📘 GitHub Field Guide</a>
+      <button class="theme-btn" id="themeToggle" onclick="toggleTheme()">🌙 Dark</button>
+    </div>
+    <div class="brand-sub">Interactive Training &amp; Reference for IT Assistants</div>
+
+    <div class="progress-box">
+      <div class="progress-label">
+        <span>Course Progress</span>
+        <span id="progressText">0 / 8 Chapters</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBar"></div>
+      </div>
+    </div>
+
     <nav>
       <ul>
         <li>
           <a href="#chapter-1">
             <span class="chap-num">Chapter 1</span>
-            The 6 Words You Need to Know
+            Git vs. GitHub &amp; Core Dictionary
           </a>
         </li>
         <li>
           <a href="#chapter-2">
-            <span class="chap-num">Chapter 2</span>
-            How Branches Work (Simply)
+            <span class="chap-num">Chapter 2 <span class="interactive-pill">Interactive</span></span>
+            Branches &amp; Live Simulator
           </a>
         </li>
         <li>
           <a href="#chapter-3">
-            <span class="chap-num">Chapter 3</span>
-            The 5-Step Daily Routine
+            <span class="chap-num">Chapter 3 <span class="interactive-pill">Checklist</span></span>
+            The 5-Step Daily Workflow
           </a>
         </li>
         <li>
           <a href="#chapter-4">
-            <span class="chap-num">Chapter 4</span>
-            Branch Naming &amp; Best Habits
+            <span class="chap-num">Chapter 4 <span class="interactive-pill">Interactive</span></span>
+            Forking vs. Branching vs. Cloning
           </a>
         </li>
         <li>
           <a href="#chapter-5">
-            <span class="chap-num">Chapter 5</span>
-            "I'm Confused!" Quick Rescue
+            <span class="chap-num">Chapter 5 <span class="interactive-pill">Interactive</span></span>
+            Version Management &amp; Rollbacks
+          </a>
+        </li>
+        <li>
+          <a href="#chapter-6">
+            <span class="chap-num">Chapter 6 <span class="interactive-pill">Interactive</span></span>
+            Solving Merge Conflicts
+          </a>
+        </li>
+        <li>
+          <a href="#chapter-7">
+            <span class="chap-num">Chapter 7</span>
+            Issues, Security &amp; .gitignore
+          </a>
+        </li>
+        <li>
+          <a href="#chapter-8">
+            <span class="chap-num">Chapter 8 <span class="interactive-pill">Quiz + FAQ</span></span>
+            Knowledge Check &amp; Rescue FAQ
           </a>
         </li>
       </ul>
     </nav>
   </aside>
 
+  <!-- MAIN CONTENT -->
   <main>
     <header class="hero">
-      <span class="badge">Educational Reference Guide</span>
-      <h1>GitHub in Simple Terms</h1>
+      <div class="hero-badges">
+        <span class="badge">IT Onboarding Edition</span>
+        <span class="badge purple">4 Interactive Labs Included</span>
+        <span class="badge green">Zero Prior Experience Needed</span>
+      </div>
+      <h1>Mastering GitHub in Simple Terms</h1>
       <p>
-        Never used GitHub before? No problem. Bookmark this page and check the chapters on the left whenever you feel stuck or unsure what button to click next.
+        Whether you are updating IT documentation, maintaining support scripts, or collaborating with developers, this guide gives you clear explanations, interactive sandboxes, and a quick-reference checklist whenever you get stuck.
       </p>
+      <div class="quick-jump-bar">
+        <a href="#chapter-2" class="btn primary">🎮 Try the Branch Simulator</a>
+        <a href="#chapter-3" class="btn">✅ Daily 5-Step Checklist</a>
+        <a href="#chapter-4" class="btn">🍴 Fork vs. Branch Guide</a>
+        <a href="#chapter-8" class="btn">🆘 "I'm Confused!" Rescue FAQ</a>
+      </div>
     </header>
 
     <!-- CHAPTER 1 -->
     <section class="chapter" id="chapter-1">
-      <div class="chapter-label">Chapter 1</div>
-      <h2>The 6 Words You Need to Know</h2>
-      <p>GitHub uses special words for very simple everyday things. Here is your cheat-sheet translator:</p>
+      <div class="chapter-header">
+        <span class="chapter-label">Chapter 1 • Foundations</span>
+        <button class="mark-read-btn" onclick="toggleChapter(1, this)">Mark Completed</button>
+      </div>
+      <h2>Git vs. GitHub &amp; The Essential Dictionary</h2>
+      <p>
+        First, people often use the words <strong>Git</strong> and <strong>GitHub</strong> as if they are the same thing. Here is the simple difference:
+      </p>
 
+      <div class="compare-two">
+        <div class="compare-box">
+          <h4>⚙️ Git (The Time-Machine Engine)</h4>
+          <p>
+            A tracking tool that records every file change over time so you can always rewind to an older version if something breaks.
+          </p>
+        </div>
+        <div class="compare-box">
+          <h4>🌐 GitHub (The Shared Cloud Website)</h4>
+          <p>
+            The website (<code>github.com</code>) where teams store their Git projects online, review each other's drafts, and collaborate safely.
+          </p>
+        </div>
+      </div>
+
+      <h3>The 8 Words You Will See Every Day</h3>
       <div class="vocab-grid">
         <div class="vocab-card">
           <strong>1. Repository (Repo)</strong>
-          <span class="analogy">Analogy: A Project Folder</span>
-          <p>The main folder on GitHub that holds all the files, documentation, and history for one project.</p>
+          <span class="analogy">📁 Project Folder</span>
+          <p>The master folder on GitHub that holds all files, manuals, scripts, and version history for one project.</p>
         </div>
-
         <div class="vocab-card">
           <strong>2. Main Branch (<code>main</code>)</strong>
-          <span class="analogy">Analogy: The Official Master Copy</span>
-          <p>The live, working version of the project. Everyone trusts that files in <code>main</code> are tested and approved.</p>
+          <span class="analogy">🏆 The Official Live Copy</span>
+          <p>The trusted, published version of the project. Everyone relies on <code>main</code> being clean and working.</p>
         </div>
-
         <div class="vocab-card">
           <strong>3. Branch</strong>
-          <span class="analogy">Analogy: A Safe Photocopy / Save Slot</span>
-          <p>Your personal workspace copy of the project where you can edit files without breaking the official <code>main</code> copy.</p>
+          <span class="analogy">📝 Safe Photocopy / Save Slot</span>
+          <p>Your private working draft inside a repo where you edit files without risking the official <code>main</code> copy.</p>
         </div>
-
         <div class="vocab-card">
           <strong>4. Commit</strong>
-          <span class="analogy">Analogy: Clicking "Save" + a Note</span>
-          <p>Saving your changes on your branch along with a short message explaining <em>what</em> you changed (e.g., "Updated printer setup IP").</p>
+          <span class="analogy">💾 Save Checkpoint + Note</span>
+          <p>Saving changes on your branch with a short message explaining <em>what</em> changed and <em>why</em>.</p>
         </div>
-
         <div class="vocab-card">
           <strong>5. Pull Request (PR)</strong>
-          <span class="analogy">Analogy: "Please Review My Draft"</span>
-          <p>A request asking your team to look at your branch changes before combining them into the official <code>main</code> branch.</p>
+          <span class="analogy">👀 Approval Request</span>
+          <p>Asking your team to inspect your branch changes before combining them into the official <code>main</code> branch.</p>
         </div>
-
         <div class="vocab-card">
           <strong>6. Merge</strong>
-          <span class="analogy">Analogy: Publishing Your Changes</span>
-          <p>Combining your approved branch changes into the official <code>main</code> branch so everyone gets the update.</p>
+          <span class="analogy">🚀 Publish to Official</span>
+          <p>Combining your approved branch into <code>main</code> so your updates become part of the official project.</p>
+        </div>
+        <div class="vocab-card">
+          <strong>7. Fork</strong>
+          <span class="analogy">🍴 Personal Copy of Another Repo</span>
+          <p>Copying someone else's entire repository into your own GitHub account so you can experiment freely.</p>
+        </div>
+        <div class="vocab-card">
+          <strong>8. Clone</strong>
+          <span class="analogy">💻 Download to Your PC</span>
+          <p>Downloading a cloud repository onto your computer so you can edit files offline.</p>
         </div>
       </div>
     </section>
 
     <!-- CHAPTER 2 -->
     <section class="chapter" id="chapter-2">
-      <div class="chapter-label">Chapter 2</div>
-      <h2>How Branches Work (And Why We Use Them)</h2>
-      <p>
-        Imagine your IT team shares an important instruction manual. If three people edit the live manual at the exact same time, someone's work gets overwritten or broken.
-      </p>
+      <div class="chapter-header">
+        <span class="chapter-label">Chapter 2 • Interactive Lab #1</span>
+        <button class="mark-read-btn" onclick="toggleChapter(2, this)">Mark Completed</button>
+      </div>
+      <h2>How Branches Work (+ Interactive Simulator)</h2>
 
       <div class="callout rule">
-        <strong>⚠️ The Golden Rule of GitHub:</strong><br />
-        Never make changes directly inside the <code>main</code> branch. Always create your own branch first!
+        <strong>⚠️ The #1 Golden Rule of GitHub:</strong><br />
+        Never edit files directly inside <code>main</code>. Always create a branch first so the live project stays 100% safe while you work!
       </div>
 
-      <p>When you create a branch, GitHub makes an instant parallel copy for you:</p>
+      <!-- INTERACTIVE BRANCH SIMULATOR -->
+      <div class="interactive-lab">
+        <div class="lab-header">
+          <div class="lab-title">🎮 Interactive Lab: Live Branch &amp; Merge Simulator</div>
+          <span class="badge purple" id="simStepBadge">Step 0 of 4</span>
+        </div>
+        <p style="font-size:0.92rem; color:var(--muted);">
+          Click the buttons in order below to watch how creating a branch protects <code>main</code> while you work:
+        </p>
 
-      <div class="diagram-box">
-<span class="main-line">main (Official):     ───●──────────●────────────────────●─── (Updated &amp; Safe!)</span>
-                         \                            /
-<span class="branch-line">your-branch (Draft):      └──● (Edit 1) ──● (Edit 2) ─┘</span>
-<span class="note">                          ↑                          ↑</span>
-<span class="note">                   1. Create Branch           4. Merge via PR</span>
+        <div class="sim-canvas" id="simCanvas">main (Official):     ───● (v1.0) ───● (v1.1 - Live &amp; Working)
+                                     ↑
+                              You are here</div>
+
+        <div class="sim-status" id="simStatus">
+          <strong>Current State:</strong> The <code>main</code> branch is live and working. You have been asked to update the company VPN setup guide. Click <strong>1. Create Branch</strong> to begin safely!
+        </div>
+
+        <div class="sim-controls">
+          <button class="btn primary" id="simBtn1" onclick="runBranchSim(1)">1. Create Branch</button>
+          <button class="btn" id="simBtn2" onclick="runBranchSim(2)" disabled>2. Commit Changes</button>
+          <button class="btn" id="simBtn3" onclick="runBranchSim(3)" disabled>3. Open Pull Request</button>
+          <button class="btn success" id="simBtn4" onclick="runBranchSim(4)" disabled>4. Merge &amp; Delete Branch</button>
+          <button class="btn danger" id="simBtnAbort" onclick="runBranchSim(99)" disabled>🗑️ Test: "I Messed Up! Delete Branch"</button>
+          <button class="btn" onclick="runBranchSim(0)">🔄 Reset</button>
+        </div>
       </div>
-
-      <ul>
-        <li><strong>You can't break anything:</strong> Even if you delete half the files on <code>your-branch</code>, the <code>main</code> branch is 100% unharmed.</li>
-        <li><strong>Easy undo:</strong> If you realize your idea isn't needed anymore, you just delete your branch and walk away.</li>
-      </ul>
     </section>
 
     <!-- CHAPTER 3 -->
     <section class="chapter" id="chapter-3">
-      <div class="chapter-label">Chapter 3</div>
+      <div class="chapter-header">
+        <span class="chapter-label">Chapter 3 • Interactive Daily Checklist</span>
+        <button class="mark-read-btn" onclick="toggleChapter(3, this)">Mark Completed</button>
+      </div>
       <h2>The 5-Step Daily Routine</h2>
-      <p>Every time you are asked to update a file, add documentation, or fix a script on GitHub, follow these exact 5 steps:</p>
+      <p>
+        Use this interactive checklist every time you need to add or edit a file on GitHub. Click each step as you complete it!
+      </p>
 
-      <ol class="step-list">
-        <li class="step-item">
-          <div class="step-number">1</div>
+      <ol class="step-list" id="dailyChecklist">
+        <li class="step-item" onclick="toggleCheckStep(this)">
+          <div class="step-check"></div>
           <div class="step-content">
-            <h4>Create Your Branch</h4>
-            <p>Start from <code>main</code> and create a fresh branch named after your task.</p>
-            <span class="ui-hint">Where to click: Branch dropdown (top-left, says "main") → Type new name → Click "Create branch"</span>
+            <h4>Step 1: Create a Fresh Branch from <code>main</code></h4>
+            <p>Never reuse old branches. Create a new branch named after today's task.</p>
+            <span class="ui-hint">GitHub UI: Click "main" dropdown (top-left) → Type branch name → Click "Create branch"</span>
           </div>
         </li>
-
-        <li class="step-item">
-          <div class="step-number">2</div>
+        <li class="step-item" onclick="toggleCheckStep(this)">
+          <div class="step-check"></div>
           <div class="step-content">
-            <h4>Make Your Changes</h4>
-            <p>Open the file you need to update (or upload/create a new file) while making sure you are inside your new branch.</p>
-            <span class="ui-hint">Where to click: Click the Pencil icon (✏️ Edit this file) or "Add file"</span>
+            <h4>Step 2: Edit or Upload Your File</h4>
+            <p>Verify the branch button says your new branch name, then make your edits.</p>
+            <span class="ui-hint">GitHub UI: Open file → Click Pencil icon (✏️ Edit) OR click "Add file"</span>
           </div>
         </li>
-
-        <li class="step-item">
-          <div class="step-number">3</div>
+        <li class="step-item" onclick="toggleCheckStep(this)">
+          <div class="step-check"></div>
           <div class="step-content">
-            <h4>Commit (Save) Your Changes</h4>
-            <p>Save your edit and write a short, clear sentence explaining what you did.</p>
-            <span class="ui-hint">Where to click: Green "Commit changes..." button (top-right) → Add message → Commit to your branch</span>
+            <h4>Step 3: Commit (Save) with a Clear Message</h4>
+            <p>Write a 1-sentence summary so anyone looking at the history knows what changed.</p>
+            <span class="ui-hint">GitHub UI: Green "Commit changes..." button → Enter message → Commit to your branch</span>
           </div>
         </li>
-
-        <li class="step-item">
-          <div class="step-number">4</div>
+        <li class="step-item" onclick="toggleCheckStep(this)">
+          <div class="step-check"></div>
           <div class="step-content">
-            <h4>Open a Pull Request (PR)</h4>
-            <p>Tell your team your branch is ready to be checked and combined into <code>main</code>.</p>
-            <span class="ui-hint">Where to click: Yellow banner "Compare &amp; pull request" → Click "Create pull request"</span>
+            <h4>Step 4: Open a Pull Request (PR)</h4>
+            <p>Propose merging your branch into <code>main</code> so a teammate can review or verify it.</p>
+            <span class="ui-hint">GitHub UI: Click yellow banner "Compare &amp; pull request" → "Create pull request"</span>
           </div>
         </li>
-
-        <li class="step-item">
-          <div class="step-number">5</div>
+        <li class="step-item" onclick="toggleCheckStep(this)">
+          <div class="step-check"></div>
           <div class="step-content">
-            <h4>Merge &amp; Clean Up</h4>
-            <p>Once approved (or if you are working solo and verified everything looks right), merge the PR and delete the old temporary branch.</p>
-            <span class="ui-hint">Where to click: Green "Merge pull request" button → "Confirm merge" → "Delete branch"</span>
+            <h4>Step 5: Merge &amp; Delete the Temporary Branch</h4>
+            <p>Combine your changes into <code>main</code>, then delete the branch to keep the repo tidy.</p>
+            <span class="ui-hint">GitHub UI: Click "Merge pull request" → "Confirm merge" → "Delete branch"</span>
           </div>
         </li>
       </ol>
+      <button class="btn" onclick="resetChecklist()" style="margin-top:8px;">🔄 Reset Daily Checklist</button>
     </section>
 
     <!-- CHAPTER 4 -->
     <section class="chapter" id="chapter-4">
-      <div class="chapter-label">Chapter 4</div>
-      <h2>Branch Naming &amp; Best Habits</h2>
-      <p>Keep branch names short, lowercase, and separated by hyphens (<code>-</code>) so anyone on the IT team knows what you are working on at a glance.</p>
+      <div class="chapter-header">
+        <span class="chapter-label">Chapter 4 • Interactive Lab #2</span>
+        <button class="mark-read-btn" onclick="toggleChapter(4, this)">Mark Completed</button>
+      </div>
+      <h2>Forking vs. Branching vs. Cloning</h2>
+      <p>
+        One of the most common questions beginners ask is: <em>"What is the difference between a <strong>Branch</strong>, a <strong>Fork</strong>, and a <strong>Clone</strong>?"</em>
+      </p>
 
-      <div class="vocab-grid">
-        <div class="vocab-card">
-          <strong>✅ Good Branch Names</strong>
-          <p>
-            <code>update-wifi-guide</code><br />
-            <code>fix-login-script</code><br />
-            <code>add-onboarding-checklist</code>
-          </p>
-        </div>
-        <div class="vocab-card">
-          <strong>❌ Avoid These Names</strong>
-          <p>
-            <code>test123</code> (Too vague)<br />
-            <code>nicolas-branch</code> (Doesn't say what task)<br />
-            <code>patch-final-v2-new</code> (Confusing)
-          </p>
-        </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Where Does It Live?</th>
+              <th>When Do You Use It?</th>
+              <th>Simple Analogy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>🔀 Branch</strong></td>
+              <td>Inside the <strong>same repository</strong> on GitHub</td>
+              <td>You are part of the team and have permission to edit the repo.</td>
+              <td>Making a new tab inside your team's shared Google Sheet.</td>
+            </tr>
+            <tr>
+              <td><strong>🍴 Fork</strong></td>
+              <td>Copied into <strong>your personal GitHub account</strong></td>
+              <td>You want to customize someone else's public project (or a repo where you don't have direct write access).</td>
+              <td>Making a personal copy of a stranger's Google Sheet into your own Google Drive.</td>
+            </tr>
+            <tr>
+              <td><strong>💻 Clone</strong></td>
+              <td>Downloaded onto <strong>your computer's hard drive</strong></td>
+              <td>You want to run scripts or edit files locally on your PC using VS Code or PowerShell.</td>
+              <td>Downloading the file to your Desktop so you can work offline.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="callout tip">
-        <strong>💡 Pro Habit — One Task Per Branch:</strong><br />
-        If you need to update the Wi-Fi guide <em>and</em> fix a backup script, make two separate branches. Small branches are much easier to review and undo!
+      <!-- INTERACTIVE SCENARIO DECIDER -->
+      <div class="interactive-lab">
+        <div class="lab-header">
+          <div class="lab-title">🧭 Interactive Lab: Should I Branch, Fork, or Clone?</div>
+        </div>
+        <p style="font-size:0.92rem; color:var(--muted);">
+          Click any real-world IT situation below to see the right tool to use:
+        </p>
+
+        <div class="scenario-grid">
+          <button class="scenario-btn" onclick="showScenario(1, this)">
+            🏢 Scenario A: "My manager asked me to update the onboarding checklist in our team's repository."
+          </button>
+          <button class="scenario-btn" onclick="showScenario(2, this)">
+            🌍 Scenario B: "I found a great public Microsoft PowerShell toolkit on GitHub and want my own independent copy to customize for our office."
+          </button>
+          <button class="scenario-btn" onclick="showScenario(3, this)">
+            🖥️ Scenario C: "I need to download our team's network diagnostic scripts onto my laptop so I can run them in PowerShell."
+          </button>
+        </div>
+
+        <div class="sim-status" id="scenarioAnswer">
+          👆 Click one of the scenarios above to see the answer!
+        </div>
       </div>
     </section>
 
     <!-- CHAPTER 5 -->
     <section class="chapter" id="chapter-5">
-      <div class="chapter-label">Chapter 5</div>
-      <h2>"I'm Confused!" — Quick Rescue FAQ</h2>
-      <p>Click on any question below when you aren't sure what's happening:</p>
+      <div class="chapter-header">
+        <span class="chapter-label">Chapter 5 • Interactive Lab #3</span>
+        <button class="mark-read-btn" onclick="toggleChapter(5, this)">Mark Completed</button>
+      </div>
+      <h2>Version Management, History &amp; Rollbacks</h2>
+      <p>
+        GitHub is a complete <strong>Version Management System</strong>. Every time someone merges or commits a change, GitHub records:
+      </p>
+      <ul style="margin-left:20px; margin-bottom:16px;">
+        <li><strong>Who</strong> made the change (Author)</li>
+        <li><strong>When</strong> it happened (Timestamp)</li>
+        <li><strong>A Unique Fingerprint (Commit SHA)</strong> — e.g., <code>94b808e</code>, which acts like a receipt number</li>
+        <li><strong>The Exact Diff</strong> — which lines were removed (red <code>-</code>) and added (green <code>+</code>)</li>
+      </ul>
 
-      <details open>
-        <summary>How do I know which branch I am currently looking at?</summary>
-        <p>
-          Look at the top-left corner of the file list on GitHub. There is a button with a branch icon (🔀). Whatever word is written on that button (for example, <code>main</code> or <code>update-guide</code>) is the branch you are currently viewing.
+      <!-- INTERACTIVE DIFF & VERSION VIEWER -->
+      <div class="interactive-lab">
+        <div class="lab-header">
+          <div class="lab-title">🔍 Interactive Lab: How to Read a GitHub "Diff" &amp; Roll Back</div>
+        </div>
+        <p style="font-size:0.92rem; color:var(--muted);">
+          Switch between views below to see how GitHub tracks line-by-line changes and lets you undo mistakes:
         </p>
-      </details>
+        <div class="sim-controls" style="margin-bottom:12px;">
+          <button class="btn primary" onclick="setDiffView('diff')">1. View GitHub Diff (Red vs. Green)</button>
+          <button class="btn" onclick="setDiffView('history')">2. View Commit History Log</button>
+          <button class="btn" onclick="setDiffView('revert')">3. How to Roll Back (Revert) a Mistake</button>
+        </div>
 
-      <details>
-        <summary>I saved (committed) changes, why don't I see them on the main page?</summary>
-        <p>
-          Because you saved them safely inside your <strong>branch</strong>! They won't appear on <code>main</code> until you complete <strong>Step 4 (Pull Request)</strong> and <strong>Step 5 (Merge)</strong>. Switch the branch dropdown at the top-left to your branch name to see your files.
-        </p>
-      </details>
+        <div class="diff-box" id="diffViewer">
+<span class="diff-ctx">  # Office Helpdesk Guide</span>
+<span class="diff-ctx">  Location: 3rd Floor, Room 302</span>
+<span class="diff-del">- Support Phone: 555-0142 (Old Extension)</span>
+<span class="diff-add">+ Support Phone: 555-0199 (New IT Hotline)</span>
+<span class="diff-add">+ Emergency Hours: 24/7 On-Call</span>
+<span class="diff-ctx">  Email: helpdesk@company.local</span></div>
 
-      <details>
-        <summary>I messed up my branch completely! Did I break the project?</summary>
-        <p>
-          <strong>No!</strong> As long as you were working on a branch and not <code>main</code>, the official project is completely untouched. You can simply go to <a href="https://github.com/NASCH01/Test1/branches/yours" target="_blank">Your Branches</a>, click the trash can icon next to your broken branch, and start a fresh one from <code>main</code>.
-        </p>
-      </details>
+        <div class="sim-status" id="diffExplain">
+          <strong>How to read this:</strong> Red lines starting with <code>-</code> show what was removed. Green lines starting with <code>+</code> show what replaced it. Gray lines are unchanged context!
+        </div>
+      </div>
 
-      <details>
-        <summary>What does "Merge Conflict" mean?</summary>
-        <p>
-          It simply means two people edited the exact same lines of the exact same file at the same time, and GitHub is asking a human: <em>"Which version of this paragraph would you like to keep?"</em> Nothing is broken—you just pick the right lines and click Commit.
-        </p>
-      </details>
+      <h3>Understanding Version Numbers (Semantic Versioning)</h3>
+      <p>
+        When teams publish official milestones on GitHub (under <strong>Releases / Tags</strong>), they use 3 numbers: <code>vMAJOR.MINOR.PATCH</code> (for example, <code>v2.4.1</code>):
+      </p>
+      <div class="semver-row">
+        <div class="semver-card">
+          <div class="semver-num">MAJOR (2.x.x)</div>
+          <p style="font-size:0.88rem; margin-top:6px;">Big overhaul or changes that aren't backward-compatible.</p>
+        </div>
+        <div class="semver-card">
+          <div class="semver-num">MINOR (x.4.x)</div>
+          <p style="font-size:0.88rem; margin-top:6px;">Added a helpful new feature or chapter without breaking anything.</p>
+        </div>
+        <div class="semver-card">
+          <div class="semver-num">PATCH (x.x.1)</div>
+          <p style="font-size:0.88rem; margin-top:6px;">Small bug fix, typo correction, or security patch.</p>
+        </div>
+      </div>
+    </section>
 
-      <details>
-        <summary>Should I delete my branch after merging?</summary>
-        <p>
-          <strong>Yes!</strong> Once your changes are merged into <code>main</code>, your changes are permanently saved in <code>main</code>. Deleting the old branch just keeps the branch list tidy (like throwing away a sticky note after finishing the chore).
+    <!-- CHAPTER 6 -->
+    <section class="chapter" id="chapter-6">
+      <div class="chapter-header">
+        <span class="chapter-label">Chapter 6 • Interactive Lab #4</span>
+        <button class="mark-read-btn" onclick="toggleChapter(6, this)">Mark Completed</button>
+      </div>
+      <h2>What Is a Merge Conflict? (+ Interactive Resolver)</h2>
+      <p>
+        New users often panic when they see the words <strong>"This branch has conflicts that must be resolved."</strong> Don't worry—nothing is broken!
+      </p>
+      <p>
+        A merge conflict only happens when <strong>two people edit the exact same line of the exact same file at the same time</strong>. GitHub pauses and asks you which line to keep.
+      </p>
+
+      <!-- INTERACTIVE CONFLICT RESOLVER -->
+      <div class="interactive-lab">
+        <div class="lab-header">
+          <div class="lab-title">🛠️ Interactive Lab: Resolve a Real Merge Conflict</div>
+          <span class="badge" id="conflictBadge">⚠️ Conflict Detected</span>
+        </div>
+        <p style="font-size:0.92rem; color:var(--muted);">
+          You changed the Wi-Fi password on your branch, while a coworker updated the same line on <code>main</code>. Click a resolution button below to fix the file:
         </p>
-      </details>
+
+        <div class="sim-canvas" id="conflictCanvas"># Guest Wi-Fi Instructions
+Network Name: Corp-Guest
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; update-wifi-branch (Your Branch)
+Password: Welcome2026!
+=======
+Password: AskReceptionDesk!
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; main (Official Branch)</div>
+
+        <div class="sim-controls">
+          <button class="btn primary" onclick="resolveConflict('mine')">✅ Keep My Branch ("Welcome2026!")</button>
+          <button class="btn" onclick="resolveConflict('main')">🏆 Keep Main ("AskReceptionDesk!")</button>
+          <button class="btn" onclick="resolveConflict('both')">🤝 Keep Both Notes</button>
+          <button class="btn" onclick="resolveConflict('reset')">🔄 Reset Conflict</button>
+        </div>
+
+        <div class="sim-status" id="conflictStatus" style="margin-top:14px;">
+          <strong>Notice the markers:</strong> Everything between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> and <code>=======</code> is your change. Everything between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> is what's currently in <code>main</code>.
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 7 -->
+    <section class="chapter" id="chapter-7">
+      <div class="chapter-header">
+        <span class="chapter-label">Chapter 7 • Collaboration &amp; Security</span>
+        <button class="mark-read-btn" onclick="toggleChapter(7, this)">Mark Completed</button>
+      </div>
+      <h2>Issues, Security Rules &amp; <code>.gitignore</code></h2>
+
+      <h3>1. GitHub Issues (Your Built-In Ticketing System)</h3>
+      <p>
+        The <strong>Issues</strong> tab at the top of a GitHub repo works just like an IT helpdesk ticket board:
+      </p>
+      <ul style="margin-left:20px; margin-bottom:18px;">
+        <li>Use Issues to report a broken script, request new documentation, or track a to-do list.</li>
+        <li><strong>Magic Trick:</strong> Every Issue gets a number (like <code>#4</code>). If you write <code>Fixes #4</code> in your Pull Request description, GitHub will <strong>automatically close Issue #4</strong> the moment your PR is merged!</li>
+      </ul>
+
+      <h3>2. Security Golden Rule &amp; What <code>.gitignore</code> Does</h3>
+      <div class="callout danger">
+        <strong>🔒 Critical IT Security Rule:</strong><br />
+        <strong>NEVER</strong> upload passwords, Personal Access Tokens, API keys, private SSH keys, or employee personal data to a GitHub repository! Even if you delete a file later, it remains visible inside the Git commit history.
+      </div>
+
+      <p>
+        To prevent accidental uploads of sensitive or junk files, professionals place a special file named <code>.gitignore</code> in their repository. Any file name or folder listed inside <code>.gitignore</code> (like <code>.env</code>, <code>passwords.txt</code>, or <code>*.log</code>) is automatically ignored by Git.
+      </p>
+    </section>
+
+    <!-- CHAPTER 8 -->
+    <section class="chapter" id="chapter-8">
+      <div class="chapter-header">
+        <span class="chapter-label">Chapter 8 • Practice Quiz &amp; Rescue FAQ</span>
+        <button class="mark-read-btn" onclick="toggleChapter(8, this)">Mark Completed</button>
+      </div>
+      <h2>Quick Knowledge Check &amp; "I'm Confused!" Rescue FAQ</h2>
+
+      <h3>🎓 3-Question Self-Test</h3>
+      <div class="quiz-q">
+        <h4>1. You need to update an IT guide in your team's repository. What should your very first step be?</h4>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1fb')">Edit the file directly on the main branch to save time.</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q1fb')">Create a new branch from main named after your task (e.g., update-vpn-guide).</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q1fb')">Delete the repository and create a new one.</button>
+        </div>
+        <div class="quiz-feedback" id="q1fb"></div>
+      </div>
+
+      <div class="quiz-q">
+        <h4>2. You want your own personal copy of another company's public repository so you can experiment with it freely under your own GitHub account. Which button do you click?</h4>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2fb')">Commit</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q2fb')">Fork</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q2fb')">Merge</button>
+        </div>
+        <div class="quiz-feedback" id="q2fb"></div>
+      </div>
+
+      <div class="quiz-q">
+        <h4>3. You committed changes to your branch, but when you visit the main repository page, your changes aren't there. Why?</h4>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'q3fb')">Your changes are safely stored on your branch and haven't been merged into main via a Pull Request yet.</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3fb')">GitHub lost your files.</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'q3fb')">Commits only last for 5 minutes.</button>
+        </div>
+        <div class="quiz-feedback" id="q3fb"></div>
+      </div>
+
+      <h3 style="margin-top:32px;">🆘 Searchable "I'm Confused!" Rescue FAQ</h3>
+      <input type="text" class="faq-search" id="faqSearch" placeholder="🔍 Type a keyword (e.g., 'branch', 'mistake', 'delete', 'fork', 'conflict')..." oninput="filterFaq()" />
+
+      <div id="faqList">
+        <details open>
+          <summary>How do I know which branch I am currently looking at?</summary>
+          <p>Look at the top-left corner above the file list on GitHub. The button with the branch icon (🔀) displays the name of the active branch (such as <code>main</code> or <code>update-guide</code>).</p>
+        </details>
+        <details>
+          <summary>I saved (committed) changes, why don't I see them on the main page?</summary>
+          <p>Because they are safely isolated inside your branch! Complete Step 4 (Pull Request) and Step 5 (Merge) to bring them into <code>main</code>, or switch the branch dropdown at the top-left to view your branch.</p>
+        </details>
+        <details>
+          <summary>I messed up my branch completely! Did I break the live project?</summary>
+          <p>No! As long as you worked on a branch and not <code>main</code>, the live project is 100% safe. Open <a href="https://github.com/NASCH01/Test1/branches/yours" target="_blank">Your Branches</a>, click the trash can icon (🗑️) next to your broken branch, and create a fresh branch from <code>main</code>.</p>
+        </details>
+        <details>
+          <summary>Someone already merged changes into main after I started my branch. How do I catch up?</summary>
+          <p>On your Pull Request page or branch view, GitHub shows an <strong>"Update branch"</strong> or <strong>"Sync fork"</strong> button. Click it and GitHub will bring the latest updates from <code>main</code> into your branch.</p>
+        </details>
+        <details>
+          <summary>Should I delete my branch after merging a Pull Request?</summary>
+          <p>Yes! Once merged, your commits are permanently part of <code>main</code>. Deleting the merged branch keeps your repository clean and prevents anyone from accidentally editing an old branch later.</p>
+        </details>
+      </div>
     </section>
   </main>
 
+  <script>
+    // Theme Toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.setAttribute('data-theme', 'light');
+        btn.textContent = '🌙 Dark';
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        btn.textContent = '☀️ Light';
+      }
+    }
+
+    // Chapter Completion Progress
+    const completedChapters = new Set();
+    function toggleChapter(num, btn) {
+      if (completedChapters.has(num)) {
+        completedChapters.delete(num);
+        btn.classList.remove('completed');
+        btn.textContent = 'Mark Completed';
+      } else {
+        completedChapters.add(num);
+        btn.classList.add('completed');
+        btn.textContent = '✓ Completed';
+      }
+      const count = completedChapters.size;
+      document.getElementById('progressText').textContent = count + ' / 8 Chapters';
+      document.getElementById('progressBar').style.width = ((count / 8) * 100) + '%';
+    }
+
+    // Lab 1: Branch Simulator
+    function runBranchSim(step) {
+      const canvas = document.getElementById('simCanvas');
+      const status = document.getElementById('simStatus');
+      const badge = document.getElementById('simStepBadge');
+      const b1 = document.getElementById('simBtn1');
+      const b2 = document.getElementById('simBtn2');
+      const b3 = document.getElementById('simBtn3');
+      const b4 = document.getElementById('simBtn4');
+      const bAbort = document.getElementById('simBtnAbort');
+
+      if (step === 0) {
+        badge.textContent = 'Step 0 of 4';
+        canvas.textContent =
+`main (Official):     ───● (v1.0) ───● (v1.1 - Live & Working)
+                                     ↑
+                              You are here`;
+        status.innerHTML = '<strong>Current State:</strong> The <code>main</code> branch is live and working. Click <strong>1. Create Branch</strong> to start a safe copy!';
+        b1.disabled = false; b2.disabled = true; b3.disabled = true; b4.disabled = true; bAbort.disabled = true;
+      } else if (step === 1) {
+        badge.textContent = 'Step 1 of 4 • Branch Created';
+        canvas.textContent =
+`main (Official):     ───● (v1.0) ───● (v1.1 - Untouched & Safe!)
+                                     \\
+update-vpn-guide:                     └──○ (Your new sandbox branch)`;
+        status.innerHTML = '<strong>Step 1 Complete:</strong> You created <code>update-vpn-guide</code>! Notice how <code>main</code> stays untouched above. Now click <strong>2. Commit Changes</strong>.';
+        b1.disabled = true; b2.disabled = false; b3.disabled = true; b4.disabled = true; bAbort.disabled = false;
+      } else if (step === 2) {
+        badge.textContent = 'Step 2 of 4 • Changes Committed';
+        canvas.textContent =
+`main (Official):     ───● (v1.0) ───● (v1.1 - Still Untouched!)
+                                     \\
+update-vpn-guide:                     └──● (Edit 1) ───● (Edit 2: Saved!)`;
+        status.innerHTML = '<strong>Step 2 Complete:</strong> You saved 2 commits on your branch. Even if your edits had a mistake, nobody using <code>main</code> is affected! Next, click <strong>3. Open Pull Request</strong> (or test deleting the branch).';
+        b1.disabled = true; b2.disabled = true; b3.disabled = false; b4.disabled = true; bAbort.disabled = false;
+      } else if (step === 3) {
+        badge.textContent = 'Step 3 of 4 • Pull Request Open';
+        canvas.textContent =
+`main (Official):     ───● (v1.0) ───● (v1.1) ─────────────── [👀 PR Review]
+                                     \\                            ↑
+update-vpn-guide:                     └──● (Edit 1) ───● (Edit 2) ┘`;
+        status.innerHTML = '<strong>Step 3 Complete:</strong> Pull Request opened! Your team can preview the green/red diff lines and approve your draft. Now click <strong>4. Merge & Delete Branch</strong>.';
+        b1.disabled = true; b2.disabled = true; b3.disabled = true; b4.disabled = false; bAbort.disabled = false;
+      } else if (step === 4) {
+        badge.textContent = 'Step 4 of 4 • Merged & Published! 🎉';
+        canvas.textContent =
+`main (Official):     ───● (v1.0) ───● (v1.1) ───────────────● (v1.2 - Live with VPN Update!)
+                                     \\                     /
+(branch deleted):                     └──● (Edit 1) ───●──┘ (Cleaned up!)`;
+        status.innerHTML = '<strong>🎉 Success!</strong> Your changes are now live in <code>main</code> (v1.2), and the temporary branch has been deleted to keep the repo clean!';
+        b1.disabled = true; b2.disabled = true; b3.disabled = true; b4.disabled = true; bAbort.disabled = true;
+      } else if (step === 99) {
+        badge.textContent = 'Emergency Abort Tested • Main Safe!';
+        canvas.textContent =
+`main (Official):     ───● (v1.0) ───● (v1.1 - 100% Unharmed!)
+                                     
+(update-vpn-guide was deleted — zero impact on main!)`;
+        status.innerHTML = '<strong>🛡️ Safety Proven:</strong> You deleted your branch after making mistakes, and <code>main</code> wasn\'t harmed at all! Click <strong>Reset</strong> to run the simulator again.';
+        b1.disabled = true; b2.disabled = true; b3.disabled = true; b4.disabled = true; bAbort.disabled = true;
+      }
+    }
+
+    // Lab 2: Checklist
+    function toggleCheckStep(li) {
+      li.classList.toggle('checked');
+      const box = li.querySelector('.step-check');
+      box.textContent = li.classList.contains('checked') ? '✓' : '';
+    }
+    function resetChecklist() {
+      document.querySelectorAll('#dailyChecklist .step-item').forEach(li => {
+        li.classList.remove('checked');
+        li.querySelector('.step-check').textContent = '';
+      });
+    }
+
+    // Lab 3: Fork vs Branch vs Clone Scenario
+    function showScenario(num, btn) {
+      document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const out = document.getElementById('scenarioAnswer');
+      if (num === 1) {
+        out.innerHTML = '✅ <strong>Correct Choice: Create a BRANCH (🔀)</strong><br/>Because this is your own team\'s repository and your goal is to update the shared manual, you create a branch inside the repo, make your edit, and open a Pull Request.';
+      } else if (num === 2) {
+        out.innerHTML = '✅ <strong>Correct Choice: FORK the Repository (🍴)</strong><br/>Because the project belongs to another organization, clicking <strong>Fork</strong> (top-right of GitHub) copies the entire repository into your own GitHub account so you can customize it freely.';
+      } else if (num === 3) {
+        out.innerHTML = '✅ <strong>Correct Choice: CLONE the Repository (💻)</strong><br/>Because you need the actual script files on your laptop\'s hard drive to run them locally in PowerShell, you <strong>Clone</strong> (or Download ZIP) the repository to your computer.';
+      }
+    }
+
+    // Lab 4: Diff & History Viewer
+    function setDiffView(mode) {
+      const viewer = document.getElementById('diffViewer');
+      const explain = document.getElementById('diffExplain');
+      if (mode === 'diff') {
+        viewer.innerHTML =
+`<span class="diff-ctx">  # Office Helpdesk Guide</span>
+<span class="diff-ctx">  Location: 3rd Floor, Room 302</span>
+<span class="diff-del">- Support Phone: 555-0142 (Old Extension)</span>
+<span class="diff-add">+ Support Phone: 555-0199 (New IT Hotline)</span>
+<span class="diff-add">+ Emergency Hours: 24/7 On-Call</span>
+<span class="diff-ctx">  Email: helpdesk@company.local</span>`;
+        explain.innerHTML = '<strong>How to read this:</strong> Red lines starting with <code>-</code> show what was removed. Green lines starting with <code>+</code> show what was added.';
+      } else if (mode === 'history') {
+        viewer.innerHTML =
+`<span class="diff-add">● Commit 94b808e (Today, 15:48) — "Updated hotline number to 555-0199" by @NASCH01</span>
+<span class="diff-ctx">│</span>
+<span class="diff-ctx">● Commit 64b0313 (Yesterday)    — "Added printer setup steps" by @IT-Team</span>
+<span class="diff-ctx">│</span>
+<span class="diff-ctx">● Commit b88b27c (Last Week)    — "Initial repository setup" by @NASCH01</span>`;
+        explain.innerHTML = '<strong>Commit History:</strong> Click "Commits" (clock icon) on GitHub to see this exact timeline. Clicking any commit code (like <code>94b808e</code>) shows the exact changes made that day.';
+      } else if (mode === 'revert') {
+        viewer.innerHTML =
+`<span class="diff-ctx">1. Open the Pull Request or Commit that caused the problem</span>
+<span class="diff-ctx">2. Click the "Revert" button on GitHub</span>
+<span class="diff-add">3. GitHub automatically creates a new branch & PR that reverses the mistake!</span>
+<span class="diff-ctx">4. Merge the Revert PR → Your main branch is restored while keeping a full audit trail.</span>`;
+        explain.innerHTML = '<strong>Why Revert is awesome:</strong> Instead of panicked manual edits, clicking <strong>Revert</strong> cleanly undoes a bad change while keeping a record of what happened.';
+      }
+    }
+
+    // Lab 5: Conflict Resolver
+    function resolveConflict(choice) {
+      const canvas = document.getElementById('conflictCanvas');
+      const status = document.getElementById('conflictStatus');
+      const badge = document.getElementById('conflictBadge');
+
+      if (choice === 'mine') {
+        canvas.textContent =
+`# Guest Wi-Fi Instructions
+Network Name: Corp-Guest
+Password: Welcome2026!`;
+        badge.className = 'badge green';
+        badge.textContent = '✓ Conflict Resolved';
+        status.innerHTML = '<strong>🎉 Resolved!</strong> You removed the <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> markers and kept your branch\'s password. Now you just click <strong>Mark as resolved → Commit merge</strong>!';
+      } else if (choice === 'main') {
+        canvas.textContent =
+`# Guest Wi-Fi Instructions
+Network Name: Corp-Guest
+Password: AskReceptionDesk!`;
+        badge.className = 'badge green';
+        badge.textContent = '✓ Conflict Resolved';
+        status.innerHTML = '<strong>🎉 Resolved!</strong> You removed the conflict markers and kept the official <code>main</code> version.';
+      } else if (choice === 'both') {
+        canvas.textContent =
+`# Guest Wi-Fi Instructions
+Network Name: Corp-Guest
+Password: Welcome2026! (Or AskReceptionDesk! for temporary passes)`;
+        badge.className = 'badge green';
+        badge.textContent = '✓ Conflict Resolved';
+        status.innerHTML = '<strong>🎉 Resolved!</strong> You combined both pieces of information cleanly and deleted the conflict markers.';
+      } else {
+        canvas.textContent =
+`# Guest Wi-Fi Instructions
+Network Name: Corp-Guest
+<<<<<<< update-wifi-branch (Your Branch)
+Password: Welcome2026!
+=======
+Password: AskReceptionDesk!
+>>>>>>> main (Official Branch)`;
+        badge.className = 'badge';
+        badge.textContent = '⚠️ Conflict Detected';
+        status.innerHTML = '<strong>Notice the markers:</strong> Pick which version to keep using the buttons above.';
+      }
+    }
+
+    // Quiz
+    function checkQuiz(btn, isCorrect, fbId) {
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.quiz-opt').forEach(b => {
+        b.classList.remove('correct', 'wrong');
+      });
+      const fb = document.getElementById(fbId);
+      fb.style.display = 'block';
+      if (isCorrect) {
+        btn.classList.add('correct');
+        fb.style.color = 'var(--success)';
+        fb.textContent = '✅ Spot on! That is the exact best practice.';
+      } else {
+        btn.classList.add('wrong');
+        fb.style.color = 'var(--danger)';
+        fb.textContent = '❌ Not quite — try one of the other options!';
+      }
+    }
+
+    // FAQ Search
+    function filterFaq() {
+      const q = document.getElementById('faqSearch').value.toLowerCase();
+      document.querySelectorAll('#faqList details').forEach(d => {
+        const text = d.textContent.toLowerCase();
+        d.style.display = text.includes(q) ? 'block' : 'none';
+        if (q.length > 1 && text.includes(q)) d.open = true;
+      });
+    }
+  </script>
 </body>
 </html>
